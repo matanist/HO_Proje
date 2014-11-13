@@ -1,0 +1,23 @@
+*****************************************
+Hastane Otomasyonu Versiyon 1.0
+Fatih BAYTAR tarafýndan geliþtirilmiþtir. 
+*****************************************
+
+4 Katmanlý olarak geliþtirilen projenin katmanlarý: 
+1. BLL(Business Logic Layer)--> Ýþ mantýðýný gerçekleþtirecek fonksiyonlar bulunmaktadýr. 
+2. Entity--> Otomasyonda adý geçen nesnelerin özelliklerini içerisinde barýndýracak katmandýr. 
+3. Facade--> Veritabaný iþlemlerini üzerine alacak katmandýr. 
+4. UI--> Kullanýcý Etkileþimini saðlayacak katmandýr. 
+
+
+******************************************
+Ýþleyiþ: 
+Hastane Otomasyon penceresinde gerekli deðerler girildikten sonra randevular veritabanýna kaydedilecek ve listview içerisinde görüntülenecektir. 
+Hastane Ekle pencresinde yeni bir hastane eklenebilecek (eklenen hastane veritabanýna kaydedilecek), hastane seçildikten sonra bu hastaneye Branþ Eklenebilecek (veritabanýna Branþ kaydedilecek), Branþ seçildikten sonra ise Doktor Eklenebilecektir (veritabanýna doktor kaydedilecek).
+Yine Hastane Ekle pencresinde, herhangi bir hastane seçimi yapýlmadan Branþ Ekle paneli aktif olmayacak, ayný þekilde Branþ seçilmeden de (branþ ekle grupbox'ýndaki listviewden item seçilmeden ) doktor eklenmeyecektir. 
+
+********************************************
+Veritabaný: 
+Ýster Mssql isterse sqllite(localdb) veritabanlarý kullanýlabilir. 
+Veritabaný; Hastane, Brans, Doktor, Hasta, Randevu isimlerinde tablolarý içerir. 
+Randevu; Hasta, Hastane, Brans ve Doktor tablolarý ile iliþkilidir. 
