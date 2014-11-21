@@ -153,12 +153,15 @@
             // 
             // lstvBranslar
             // 
+            this.lstvBranslar.AllowEdit = false;
+            this.lstvBranslar.AllowRemove = false;
             this.lstvBranslar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lstvBranslar.Location = new System.Drawing.Point(2, 155);
             this.lstvBranslar.Name = "lstvBranslar";
             this.lstvBranslar.Size = new System.Drawing.Size(243, 330);
             this.lstvBranslar.TabIndex = 7;
             this.lstvBranslar.Text = "radListView1";
+            this.lstvBranslar.SelectedIndexChanged += new System.EventHandler(this.lstvBranslar_SelectedIndexChanged);
             // 
             // btnBransKaydet
             // 
@@ -214,6 +217,8 @@
             // 
             // lstvDoktorlar
             // 
+            this.lstvDoktorlar.AllowEdit = false;
+            this.lstvDoktorlar.AllowRemove = false;
             this.lstvDoktorlar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lstvDoktorlar.Location = new System.Drawing.Point(2, 155);
             this.lstvDoktorlar.Name = "lstvDoktorlar";
@@ -229,6 +234,7 @@
             this.btnDoktorKaydet.Size = new System.Drawing.Size(106, 33);
             this.btnDoktorKaydet.TabIndex = 10;
             this.btnDoktorKaydet.Text = "Kaydet";
+            this.btnDoktorKaydet.Click += new System.EventHandler(this.btnDoktorKaydet_Click);
             // 
             // btnDoktorSil
             // 

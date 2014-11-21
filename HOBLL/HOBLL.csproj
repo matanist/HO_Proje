@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBrans.cs" />
+    <Compile Include="BDoktor.cs" />
     <Compile Include="BHastane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

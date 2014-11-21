@@ -88,11 +88,55 @@ namespace HO_Proje
 
         private void lstvHastaneler_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lstvBranslar.SelectedIndexChanged -= lstvBranslar_SelectedIndexChanged;
             lstvBranslar.Enabled = true;
             BBrans branslar = new BBrans();
             lstvBranslar.DataSource = branslar.SeciliHastaneninTumBranslari(Convert.ToInt32(lstvHastaneler.SelectedItem.Value));
             lstvBranslar.DisplayMember = "Ad";
             lstvBranslar.ValueMember = "ID";
+            lstvBranslar.SelectedIndexChanged += lstvBranslar_SelectedIndexChanged;
+        }
+
+        private void lstvBranslar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            gbDoktorEkle.Enabled = true;
+            BDoktor doktorlar=new BDoktor();
+            lstvDoktorlar.DataSource = doktorlar.SeciliHastaneveBranstakiTumDoktorlar(Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
+            lstvDoktorlar.DisplayMember = "Ad";
+            lstvDoktorlar.ValueMember = "ID";
+        }
+
+        private void btnDoktorKaydet_Click(object sender, EventArgs e)
+        {
+            EDoktor yeniDoktor = new EDoktor();
+            yeniDoktor.Ad = txbDoktorAdi.Text;
+            EBrans seciliDoktorBransi=new EBrans();
+            seciliDoktorBransi.ID = Convert.ToInt32(lstvBranslar.SelectedItem.Value.ToString());
+            yeniDoktor.Brans = seciliDoktorBransi;
+            EHastane seciliDoktorHastanesi = new EHastane();
+            seciliDoktorHastanesi.ID = Convert.ToInt32(lstvHastaneler.SelectedItem.Value.ToString());
+            yeniDoktor.Hastane = seciliDoktorHastanesi;
+            //Yeni doktorun tüm bilgilerini UI'den aldık. Şimdi İş katmanına gönderelim. 
+
+            BDoktor doktorEkle = new BDoktor();
+            //Mevcut branşlar arasında eklenmek istenen varsa uyarılıyor. 
+            foreach (var item in lstvDoktorlar.Items)
+            {
+                if (item.Text == yeniDoktor.Ad)
+                {
+                    MessageBox.Show("Bu Doktor zaten mevcut");
+                    return;
+                }
+            }
+            if (doktorEkle.DoktorVarMi(yeniDoktor.Ad))
+            {
+                MessageBox.Show("Bu Doktor başka bir branş veya hastanede görev yapmakta");
+                return;
+            }
+            MessageBox.Show(doktorEkle.DoktorEkle(seciliDoktorHastanesi.ID,seciliDoktorBransi.ID,yeniDoktor.Ad)?"Doktor Ekleme Başarılı":"Doktor Ekleme Sırasında Bir Sorun Oluştu");
+            lstvDoktorlar.DataSource = doktorEkle.SeciliHastaneveBranstakiTumDoktorlar(seciliDoktorHastanesi.ID, seciliDoktorBransi.ID);
+            lstvDoktorlar.DisplayMember = "Ad";
+            lstvDoktorlar.ValueMember="ID";
         }
     }
 }

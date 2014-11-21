@@ -48,5 +48,32 @@ namespace HOFacade
             da.Fill(dt);
             return dt;
         }
+        public bool DoktorEkle(int hastaneID,int bransID, string doktorAdi)
+        {
+            SqlCommand comm = new SqlCommand("Insert INTO Doktor Values(@doktorAdi,@hastaneID,@bransID)", conn);
+            comm.Parameters.AddWithValue("@doktorAdi", doktorAdi);
+            comm.Parameters.AddWithValue("@hastaneID", hastaneID);
+            comm.Parameters.AddWithValue("@bransID", bransID);
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            bool sonuc = comm.ExecuteNonQuery() > 0;
+            return sonuc;
+        }
+        public DataTable DoktorlariGetirHastaneIDveBransIDyeGore(int hastaneID,int bransID)
+        {
+            SqlDataAdapter da = new SqlDataAdapter("Select * From Doktor Where HastaneID=@hastaneID and BransID=@bransID", connectionCumlecigi);
+            da.SelectCommand.Parameters.AddWithValue("@hastaneID", hastaneID);
+            da.SelectCommand.Parameters.AddWithValue("@bransID", bransID);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+        public bool DoktorMevcutMu(string doktorAdi)
+        {
+            SqlCommand comm = new SqlCommand("Select * From Doktor Where Ad=@doktorAdi", conn);
+            comm.Parameters.AddWithValue("@doktorAdi", doktorAdi);
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            bool sonuc =comm.ExecuteScalar()!=null ;
+            return sonuc;
+        }
     }
 }
