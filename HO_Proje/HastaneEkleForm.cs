@@ -19,7 +19,14 @@ namespace HO_Proje
             Form1 form1 = new Form1();
             form1.Show();
         }
-
+        private void lstvHastaneDoldur(BHastane hastane)
+        {
+            
+            //listview'in kaynağı, görünen değeri ve arkaplanda tutacağı value ayarlanıyor. 
+            lstvHastaneler.DataSource = hastane.TumHastaneler();
+            lstvHastaneler.DisplayMember = "Ad";
+            lstvHastaneler.ValueMember = "ID";
+        }
         private void radButton1_Click(object sender, EventArgs e)
         {
 
@@ -29,11 +36,7 @@ namespace HO_Proje
             //hastane nesnesi BHastane sınıfından hazırlandı. HastaneEkle metodundan dönen değerin durumuna göre kullanıcıya bilgi veriliyor. 
             BHastane hastane = new BHastane();
             MessageBox.Show(hastane.HastaneEkle(eh.AD) ? "Kayıt Başarılı" : "Kayıt Başarısız");
-
-            //listview'in kaynağı, görünen değeri ve arkaplanda tutacağı value ayarlanıyor. 
-            lstvHastaneler.DataSource = hastane.TumHastaneler();
-            lstvHastaneler.DisplayMember = "Ad";
-            lstvHastaneler.ValueMember = "ID";
+            lstvHastaneDoldur(hastane);
         }
 
         private void HastaneEkleForm_Load(object sender, EventArgs e)
@@ -43,9 +46,7 @@ namespace HO_Proje
 
             //DataSource'un belirlenmesi ile birlikte listview'in eventleri tetikleniyordu. Formun loadında tetiklenen bu olayı, form load olayından çıkardım ve en sona tekrar ekledim. 
             lstvHastaneler.SelectedIndexChanged -= lstvHastaneler_SelectedIndexChanged;
-            lstvHastaneler.DataSource = hastane.TumHastaneler();
-            lstvHastaneler.DisplayMember = "Ad";
-            lstvHastaneler.ValueMember = "ID";
+            lstvHastaneDoldur(hastane);
 
             //Brans ve Doktor gruplarının listviewleri etkisi hale getiriliyor. 
             lstvBranslar.Enabled = false;
@@ -53,7 +54,13 @@ namespace HO_Proje
             lstvHastaneler.SelectedIndexChanged += lstvHastaneler_SelectedIndexChanged;
 
         }
-
+        private void lstvBransDoldur(BBrans bransEkle, int ID)
+        {
+            
+            lstvBranslar.DataSource = bransEkle.SeciliHastaneninTumBranslari(ID);
+            lstvBranslar.DisplayMember = "Ad";
+            lstvBranslar.ValueMember = "ID";
+        }
         private void btnBransKaydet_Click(object sender, EventArgs e)
         {
             //Entity Brans Sınıfından yeni instans alındı ve bunun AD propertisine txtbox'ın içerisindeki değer atandı. 
@@ -80,10 +87,8 @@ namespace HO_Proje
                 return;
             }
             MessageBox.Show(bransEkle.BransEkle(yeniBrans.Hastane.ID, yeniBrans.AD) ? "Branş Ekleme Başarılı" : "Branş Eklemede bir sorun oldu");
-            lstvBranslar.DataSource = bransEkle.SeciliHastaneninTumBranslari(yeniBrans.Hastane.ID);
-            lstvBranslar.DisplayMember = "Ad";
-            lstvBranslar.ValueMember = "ID";
-            //Brans ekleme grubundaki listview'in içeriği branslarla doldurulacak. 
+            lstvBransDoldur(bransEkle, yeniBrans.Hastane.ID);
+
         }
 
         private void lstvHastaneler_SelectedIndexChanged(object sender, EventArgs e)
@@ -91,26 +96,29 @@ namespace HO_Proje
             lstvBranslar.SelectedIndexChanged -= lstvBranslar_SelectedIndexChanged;
             lstvBranslar.Enabled = true;
             BBrans branslar = new BBrans();
-            lstvBranslar.DataSource = branslar.SeciliHastaneninTumBranslari(Convert.ToInt32(lstvHastaneler.SelectedItem.Value));
-            lstvBranslar.DisplayMember = "Ad";
-            lstvBranslar.ValueMember = "ID";
+            lstvBransDoldur(branslar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value));
             lstvBranslar.SelectedIndexChanged += lstvBranslar_SelectedIndexChanged;
         }
-
+        private void lstvDoktorDoldur(BDoktor doktorlar, int hastaneID, int bransID)
+        {
+            
+            lstvDoktorlar.DataSource = doktorlar.SeciliHastaneveBranstakiTumDoktorlar(hastaneID, bransID);
+            lstvDoktorlar.DisplayMember = "Ad";
+            lstvDoktorlar.ValueMember = "ID";
+        }
         private void lstvBranslar_SelectedIndexChanged(object sender, EventArgs e)
         {
             gbDoktorEkle.Enabled = true;
-            BDoktor doktorlar=new BDoktor();
-            lstvDoktorlar.DataSource = doktorlar.SeciliHastaneveBranstakiTumDoktorlar(Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
-            lstvDoktorlar.DisplayMember = "Ad";
-            lstvDoktorlar.ValueMember = "ID";
+            lstvDoktorlar.Enabled = true;
+            BDoktor doktorlar = new BDoktor();
+            lstvDoktorDoldur(doktorlar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
         }
 
         private void btnDoktorKaydet_Click(object sender, EventArgs e)
         {
             EDoktor yeniDoktor = new EDoktor();
             yeniDoktor.Ad = txbDoktorAdi.Text;
-            EBrans seciliDoktorBransi=new EBrans();
+            EBrans seciliDoktorBransi = new EBrans();
             seciliDoktorBransi.ID = Convert.ToInt32(lstvBranslar.SelectedItem.Value.ToString());
             yeniDoktor.Brans = seciliDoktorBransi;
             EHastane seciliDoktorHastanesi = new EHastane();
@@ -133,10 +141,8 @@ namespace HO_Proje
                 MessageBox.Show("Bu Doktor başka bir branş veya hastanede görev yapmakta");
                 return;
             }
-            MessageBox.Show(doktorEkle.DoktorEkle(seciliDoktorHastanesi.ID,seciliDoktorBransi.ID,yeniDoktor.Ad)?"Doktor Ekleme Başarılı":"Doktor Ekleme Sırasında Bir Sorun Oluştu");
-            lstvDoktorlar.DataSource = doktorEkle.SeciliHastaneveBranstakiTumDoktorlar(seciliDoktorHastanesi.ID, seciliDoktorBransi.ID);
-            lstvDoktorlar.DisplayMember = "Ad";
-            lstvDoktorlar.ValueMember="ID";
+            MessageBox.Show(doktorEkle.DoktorEkle(seciliDoktorHastanesi.ID, seciliDoktorBransi.ID, yeniDoktor.Ad) ? "Doktor Ekleme Başarılı" : "Doktor Ekleme Sırasında Bir Sorun Oluştu");
+            lstvDoktorDoldur(doktorEkle, seciliDoktorHastanesi.ID, seciliDoktorBransi.ID);
         }
     }
 }
