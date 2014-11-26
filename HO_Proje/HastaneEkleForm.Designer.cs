@@ -98,6 +98,7 @@
             this.lstvHastaneler.TabIndex = 8;
             this.lstvHastaneler.Text = "radListView1";
             this.lstvHastaneler.SelectedIndexChanged += new System.EventHandler(this.lstvHastaneler_SelectedIndexChanged);
+            this.lstvHastaneler.ItemMouseDoubleClick += new Telerik.WinControls.UI.ListViewItemEventHandler(this.lstvHastaneler_SelectedIndexChanged);
             // 
             // radButton1
             // 

@@ -199,5 +199,15 @@ namespace HO_Proje
             if (lstvBranslar.SelectedItem == null) lstvBranslar.SelectedIndex = 0;
             lstvDoktorDoldur(doktorlar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
         }
+
+        private void lstvHastaneler_SelectedIndexChanged(object sender, Telerik.WinControls.UI.ListViewItemEventArgs e)
+        {
+            lstvBranslar.SelectedIndexChanged -= lstvBranslar_SelectedIndexChanged;
+            lstvBranslar.Enabled = true;
+            BBrans branslar = new BBrans();
+            if (lstvHastaneler.SelectedItem == null) lstvHastaneler.SelectedIndex = 0;
+            lstvBransDoldur(branslar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value));
+            lstvBranslar.SelectedIndexChanged += lstvBranslar_SelectedIndexChanged;
+        }
     }
 }

@@ -42,9 +42,14 @@
     <Compile Include="BBrans.cs" />
     <Compile Include="BDoktor.cs" />
     <Compile Include="BHastane.cs" />
+    <Compile Include="BRandevu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HOEntity\HOEntity.csproj">
+      <Project>{9b476f0b-4c1e-4359-9150-b0e8f2fb8be3}</Project>
+      <Name>HOEntity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HOFacade\HOFacade.csproj">
       <Project>{7a695c87-188f-4080-b79f-84ae39ec944f}</Project>
       <Name>HOFacade</Name>
