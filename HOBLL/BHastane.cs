@@ -24,6 +24,13 @@ namespace HOBLL
             return baglanti.TumHastaneler();
             //adfkjakdfj
         }
-        
+
+
+        public bool HastaneSil(int hastaneID)
+        {
+            FVT baglanti = new FVT();
+            return baglanti.hastaneSil(hastaneID);
+            
+        }
     }
 }

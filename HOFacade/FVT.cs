@@ -83,5 +83,44 @@ namespace HOFacade
             if (conn.State == ConnectionState.Closed) conn.Open();
             return comm.ExecuteNonQuery() > 0;
         }
+
+        public bool BransSil(int bransID)
+        {
+            //BransID'ye ait doktorlar var mı kontrol ediliyor. 
+            SqlCommand comm = new SqlCommand("Select * From Doktor Where BransID=@bransID", conn);
+            comm.Parameters.AddWithValue("@bransID", bransID);
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            if (comm.ExecuteScalar()!=null)
+            {
+                return false;
+                
+            }
+            else
+            {
+                comm = new SqlCommand("Delete From Brans Where ID=@bransID", conn);
+                comm.Parameters.AddWithValue("@bransID", bransID);
+                if (conn.State == ConnectionState.Closed) conn.Open();
+                if (comm.ExecuteNonQuery() > 0) return true;
+            }
+            return false;
+        }
+
+        public bool hastaneSil(int hastaneID)
+        {
+            SqlCommand comm=new SqlCommand("Select * From Brans Where HastaneID=@hastaneID",conn);
+            comm.Parameters.AddWithValue("@hastaneID", hastaneID);
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            if (comm.ExecuteScalar()!=null)
+            {
+                return false;
+            }
+            else
+            {
+                comm = new SqlCommand("Delete From Hastane Where ID=@hastaneID", conn);
+                comm.Parameters.AddWithValue("@hastaneID", hastaneID);
+                if (comm.ExecuteNonQuery() > 0) return true;
+            }
+            return false;
+        }
     }
 }

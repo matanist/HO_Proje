@@ -21,7 +21,7 @@ namespace HO_Proje
         }
         private void lstvHastaneDoldur(BHastane hastane)
         {
-            
+
             //listview'in kaynağı, görünen değeri ve arkaplanda tutacağı value ayarlanıyor. 
             lstvHastaneler.DataSource = hastane.TumHastaneler();
             lstvHastaneler.DisplayMember = "Ad";
@@ -56,7 +56,7 @@ namespace HO_Proje
         }
         private void lstvBransDoldur(BBrans bransEkle, int ID)
         {
-            
+
             lstvBranslar.DataSource = bransEkle.SeciliHastaneninTumBranslari(ID);
             lstvBranslar.DisplayMember = "Ad";
             lstvBranslar.ValueMember = "ID";
@@ -96,12 +96,13 @@ namespace HO_Proje
             lstvBranslar.SelectedIndexChanged -= lstvBranslar_SelectedIndexChanged;
             lstvBranslar.Enabled = true;
             BBrans branslar = new BBrans();
+            if (lstvHastaneler.SelectedItem == null) lstvHastaneler.SelectedIndex = 0 ;
             lstvBransDoldur(branslar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value));
             lstvBranslar.SelectedIndexChanged += lstvBranslar_SelectedIndexChanged;
         }
         private void lstvDoktorDoldur(BDoktor doktorlar, int hastaneID, int bransID)
         {
-            
+
             lstvDoktorlar.DataSource = doktorlar.SeciliHastaneveBranstakiTumDoktorlar(hastaneID, bransID);
             lstvDoktorlar.DisplayMember = "Ad";
             lstvDoktorlar.ValueMember = "ID";
@@ -111,7 +112,8 @@ namespace HO_Proje
             gbDoktorEkle.Enabled = true;
             lstvDoktorlar.Enabled = true;
             BDoktor doktorlar = new BDoktor();
-            lstvDoktorDoldur(doktorlar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
+            if (lstvBranslar.SelectedItem == null) lstvBranslar.SelectedIndex = 0;
+           lstvDoktorDoldur(doktorlar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
         }
 
         private void btnDoktorKaydet_Click(object sender, EventArgs e)
@@ -149,9 +151,53 @@ namespace HO_Proje
         {
             if (lstvDoktorlar.SelectedItem == null) return;
             BDoktor doktorSil = new BDoktor();
-            MessageBox.Show(doktorSil.DoktorSil(Convert.ToInt32(lstvDoktorlar.SelectedItem.Value))?"Doktor Silme Başarılı":"Doktor silerken hata oluştu");
+            MessageBox.Show(doktorSil.DoktorSil(Convert.ToInt32(lstvDoktorlar.SelectedItem.Value)) ? "Doktor Silme Başarılı" : "Doktor silerken hata oluştu");
             lstvDoktorlar.Items.Remove(lstvDoktorlar.Items[lstvDoktorlar.SelectedIndex]);
-            //lstvDoktorDoldur(doktorSil, Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
+
+        }
+
+        private void btnBransSil_Click(object sender, EventArgs e)
+        {
+            if (lstvBranslar.SelectedItem == null) return;
+            BBrans bransSil = new BBrans();
+
+            if (bransSil.BransSil(Convert.ToInt32(lstvBranslar.SelectedItem.Value)))
+            {
+                MessageBox.Show("Branş Silme Başarılı");
+                lstvBranslar.Items.Remove(lstvBranslar.Items[lstvBranslar.SelectedIndex]);
+                if(lstvBranslar.Items.Count>0)
+                lstvBranslar.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("Brans Silme sırasında bir hata oluştu. \nBranş silerken branşa ait doktor olmamalıdır!");
+            }
+
+        }
+
+        private void btnRandevuSil_Click(object sender, EventArgs e)
+        {
+            if (lstvHastaneler.SelectedItem == null) return;
+            BHastane hastaneSil = new BHastane();
+           
+            if (hastaneSil.HastaneSil(Convert.ToInt32(lstvHastaneler.SelectedItem.Value)))
+            {
+                MessageBox.Show("Hastane Silme Başarılı");
+                lstvHastaneler.Items.Remove(lstvHastaneler.Items[lstvHastaneler.SelectedIndex]);
+            }
+            else
+            {
+                MessageBox.Show("Hastane silerken hata oluştu. \nÖncelikle hastaneye ait branşları silmeniz gerekir");
+            }
+        }
+
+        private void lstvBranslar_SelectedIndexChanged(object sender, Telerik.WinControls.UI.ListViewItemEventArgs e)
+        {
+            gbDoktorEkle.Enabled = true;
+            lstvDoktorlar.Enabled = true;
+            BDoktor doktorlar = new BDoktor();
+            if (lstvBranslar.SelectedItem == null) lstvBranslar.SelectedIndex = 0;
+            lstvDoktorDoldur(doktorlar, Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
         }
     }
 }

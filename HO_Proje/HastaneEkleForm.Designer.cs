@@ -117,6 +117,7 @@
             this.btnRandevuSil.Size = new System.Drawing.Size(80, 33);
             this.btnRandevuSil.TabIndex = 1;
             this.btnRandevuSil.Text = "Sil";
+            this.btnRandevuSil.Click += new System.EventHandler(this.btnRandevuSil_Click);
             // 
             // lblHastaneAdi
             // 
@@ -162,6 +163,7 @@
             this.lstvBranslar.TabIndex = 7;
             this.lstvBranslar.Text = "radListView1";
             this.lstvBranslar.SelectedIndexChanged += new System.EventHandler(this.lstvBranslar_SelectedIndexChanged);
+            this.lstvBranslar.ItemMouseDoubleClick += new Telerik.WinControls.UI.ListViewItemEventHandler(this.lstvBranslar_SelectedIndexChanged);
             // 
             // btnBransKaydet
             // 
@@ -181,6 +183,7 @@
             this.btnBransSil.Size = new System.Drawing.Size(80, 33);
             this.btnBransSil.TabIndex = 5;
             this.btnBransSil.Text = "Sil";
+            this.btnBransSil.Click += new System.EventHandler(this.btnBransSil_Click);
             // 
             // radLabel1
             // 

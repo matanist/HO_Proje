@@ -25,5 +25,10 @@ namespace HOBLL
             return vt.BranslariGetir(hastaneID);
 
         }
+        public bool BransSil(int bransID)
+        {
+            FVT vt = new FVT();
+            return vt.BransSil(bransID);
+        }
     }
 }
