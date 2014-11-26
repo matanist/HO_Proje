@@ -144,5 +144,14 @@ namespace HO_Proje
             MessageBox.Show(doktorEkle.DoktorEkle(seciliDoktorHastanesi.ID, seciliDoktorBransi.ID, yeniDoktor.Ad) ? "Doktor Ekleme Başarılı" : "Doktor Ekleme Sırasında Bir Sorun Oluştu");
             lstvDoktorDoldur(doktorEkle, seciliDoktorHastanesi.ID, seciliDoktorBransi.ID);
         }
+
+        private void btnDoktorSil_Click(object sender, EventArgs e)
+        {
+            if (lstvDoktorlar.SelectedItem == null) return;
+            BDoktor doktorSil = new BDoktor();
+            MessageBox.Show(doktorSil.DoktorSil(Convert.ToInt32(lstvDoktorlar.SelectedItem.Value))?"Doktor Silme Başarılı":"Doktor silerken hata oluştu");
+            lstvDoktorlar.Items.Remove(lstvDoktorlar.Items[lstvDoktorlar.SelectedIndex]);
+            //lstvDoktorDoldur(doktorSil, Convert.ToInt32(lstvHastaneler.SelectedItem.Value), Convert.ToInt32(lstvBranslar.SelectedItem.Value));
+        }
     }
 }

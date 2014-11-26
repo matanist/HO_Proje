@@ -29,5 +29,11 @@ namespace HOBLL
             bool sonuc = baglanti.DoktorMevcutMu(doktorAdi);
             return sonuc;
         }
+        public bool DoktorSil(int doktorID)
+        {
+            FVT baglanti = new FVT();
+            bool sonuc = baglanti.DoktorSil(doktorID);
+            return sonuc;
+        }
     }
 }

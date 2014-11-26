@@ -75,5 +75,13 @@ namespace HOFacade
             bool sonuc =comm.ExecuteScalar()!=null ;
             return sonuc;
         }
+
+        public bool DoktorSil(int doktorID)
+        {
+            SqlCommand comm = new SqlCommand("Delete From Doktor Where ID=@doktorID", conn);
+            comm.Parameters.AddWithValue("@doktorID", doktorID);
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            return comm.ExecuteNonQuery() > 0;
+        }
     }
 }

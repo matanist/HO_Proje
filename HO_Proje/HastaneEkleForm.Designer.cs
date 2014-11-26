@@ -244,6 +244,7 @@
             this.btnDoktorSil.Size = new System.Drawing.Size(80, 33);
             this.btnDoktorSil.TabIndex = 9;
             this.btnDoktorSil.Text = "Sil";
+            this.btnDoktorSil.Click += new System.EventHandler(this.btnDoktorSil_Click);
             // 
             // radLabel2
             // 
