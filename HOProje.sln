@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HOUI", "HO_Proje\HOUI.csproj", "{F653818C-7B88-48C7-BF92-3D69BA1A4323}"
 EndProject
@@ -29,8 +29,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Debug|x86.Build.0 = Debug|Any CPU
 		{F653818C-7B88-48C7-BF92-3D69BA1A4323}.Release|Any CPU.ActiveCfg = Release|Any CPU

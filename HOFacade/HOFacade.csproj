@@ -30,8 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,8 +49,66 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Brans.cs">
+      <DependentUpon>HastaneOtomasyonModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Doktor.cs">
+      <DependentUpon>HastaneOtomasyonModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FVT.cs" />
+    <Compile Include="Hastane.cs">
+      <DependentUpon>HastaneOtomasyonModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HastaneOtomasyonModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HastaneOtomasyonModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HastaneOtomasyonModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HastaneOtomasyonModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HastaneOtomasyonModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HastaneOtomasyonModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Randevu.cs">
+      <DependentUpon>HastaneOtomasyonModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HOEntity\HOEntity.csproj">
+      <Project>{9b476f0b-4c1e-4359-9150-b0e8f2fb8be3}</Project>
+      <Name>HOEntity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="HastaneOtomasyonModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HastaneOtomasyonModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="HastaneOtomasyonModel.edmx.diagram">
+      <DependentUpon>HastaneOtomasyonModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HastaneOtomasyonModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HastaneOtomasyonModel.edmx</DependentUpon>
+      <LastGenOutput>HastaneOtomasyonModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="HastaneOtomasyonModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HastaneOtomasyonModel.edmx</DependentUpon>
+      <LastGenOutput>HastaneOtomasyonModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

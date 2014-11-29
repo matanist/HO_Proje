@@ -1,6 +1,10 @@
 ﻿using HOBLL;
 using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using HOEntity;
+using System.Linq;
+using HOProje;
 namespace HO_Proje
 {
     public partial class Form1 : Telerik.WinControls.UI.RadForm
@@ -19,9 +23,10 @@ namespace HO_Proje
 
         private void Form1_Load(object sender, System.EventArgs e)
         {
-
+            grdKayitliRandevular.CurrentRowChanged -= grdKayitliRandevular_CurrentRowChanged;
 
             dgvRandevulariDoldur();
+            grdKayitliRandevular.CurrentRowChanged += grdKayitliRandevular_CurrentRowChanged;
 
         }
 
@@ -71,6 +76,7 @@ namespace HO_Proje
 
         private void btnRandevuEkle_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txbHastaAdi.Text) || string.IsNullOrEmpty(txbTcKimlikNo.Text) || ddlBransSecimi.SelectedValue == null || ddlDoktorSecimi.SelectedValue == null || ddlHastaneler.SelectedValue == null || dtpRandevuTarihi.Value == null) return; 
             BRandevu randevu = new BRandevu();
             if (randevu.RandevuEkle(dtpRandevuTarihi.Value, txbHastaAdi.Text, txbTcKimlikNo.Text, Convert.ToInt32(ddlHastaneler.SelectedItem.Value), Convert.ToInt32(ddlBransSecimi.SelectedItem.Value), Convert.ToInt32(ddlDoktorSecimi.SelectedItem.Value)))
             {
@@ -85,6 +91,7 @@ namespace HO_Proje
 
         private void dgvRandevulariDoldur()
         {
+            
             BRandevu randevular=new BRandevu();
             grdKayitliRandevular.DataSource = randevular.TumRandevular();
             grdKayitliRandevular.Columns[0].HeaderText = "ID";
@@ -96,7 +103,52 @@ namespace HO_Proje
             grdKayitliRandevular.Columns[6].HeaderText = "Doktor";
 
             grdKayitliRandevular.DataSource = randevular.TumRandevular();
+
+        }
+
+        private void grdKayitliRandevular_CurrentRowChanged(object sender, Telerik.WinControls.UI.CurrentRowChangedEventArgs e)
+        {
+            int seciliRandevuID = Convert.ToInt32(grdKayitliRandevular.CurrentRow.Cells["ID"].Value);
+            BRandevu bRandevu=new BRandevu();
+            List<ERandevu> randevular = bRandevu.TumRandevular();
+            ERandevu randevu = new ERandevu();
+            randevu = (from r in randevular
+                      where r.ID == seciliRandevuID
+                      select r).FirstOrDefault();
+            txbHastaAdi.Text = randevu.HastaAd;
+            txbTcKimlikNo.Text = randevu.HastaTCKimlik;
+            ddlBransSecimi.Text = randevu.BransAdi;
+            ddlHastaneler.Text = randevu.HastaneAdi;
+            ddlDoktorSecimi.Text = randevu.DoktorAdi;
+            dtpRandevuTarihi.Value = randevu.Tarih;
+        }
+
+        private void btnRandevuGuncelle_Click(object sender, EventArgs e)
+        {
+            BRandevu randevuGuncelle = new BRandevu();
+            if (string.IsNullOrEmpty(txbTcKimlikNo.Text)) return;
+            MessageBox.Show(randevuGuncelle.RandevuDuzenle(Convert.ToInt32(grdKayitliRandevular.CurrentRow.Cells["ID"].Value),dtpRandevuTarihi.Value,txbHastaAdi.Text,txbTcKimlikNo.Text)?"Güncelleme Başarılı":"Güncelleme sırasında bir sorun oluştu");
+            grdKayitliRandevular.Rows.Clear();
+            grdKayitliRandevular.DataSource = randevuGuncelle.TumRandevular();
+        }
+
+        private void btnRandevuSil_Click(object sender, EventArgs e)
+        {
+            BRandevu randevuSil = new BRandevu();
+            if (grdKayitliRandevular.CurrentRow.Cells["ID"].Value == null) return;
+            DialogResult dialogSonuc = MessageBox.Show("Silmek istediğinize emin misiniz?","Dikkat",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+            if (dialogSonuc == DialogResult.No) return;
+            MessageBox.Show(randevuSil.RandevuSil(Convert.ToInt32(grdKayitliRandevular.CurrentRow.Cells["ID"].Value))?"Randevu Başarı ile silindi":"Randevu silerken hata oluştu"); 
+            grdKayitliRandevular.Rows.Clear();
+            grdKayitliRandevular.DataSource = randevuSil.TumRandevular();
             
+        }
+
+        private void radMenuItem1_Click(object sender, EventArgs e)
+        {
+            DbAyarForm yeniForm = new DbAyarForm();
+            yeniForm.Show();
+            this.Hide();
         }
 
 

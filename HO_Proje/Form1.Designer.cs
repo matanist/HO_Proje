@@ -48,6 +48,8 @@
             this.txbTcKimlikNo = new Telerik.WinControls.UI.RadTextBox();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
             this.txbHastaAdi = new Telerik.WinControls.UI.RadTextBox();
+            this.radMenu1 = new Telerik.WinControls.UI.RadMenu();
+            this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBox1)).BeginInit();
             this.radGroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdKayitliRandevular)).BeginInit();
@@ -68,6 +70,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txbTcKimlikNo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txbHastaAdi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,6 +110,7 @@
             this.grdKayitliRandevular.Size = new System.Drawing.Size(658, 309);
             this.grdKayitliRandevular.TabIndex = 10;
             this.grdKayitliRandevular.Text = "radGridView1";
+            this.grdKayitliRandevular.CurrentRowChanged += new Telerik.WinControls.UI.CurrentRowChangedEventHandler(this.grdKayitliRandevular_CurrentRowChanged);
             // 
             // gbHastaKayitPaneli
             // 
@@ -127,12 +131,12 @@
             this.gbHastaKayitPaneli.Controls.Add(this.txbTcKimlikNo);
             this.gbHastaKayitPaneli.Controls.Add(this.radLabel1);
             this.gbHastaKayitPaneli.Controls.Add(this.txbHastaAdi);
-            this.gbHastaKayitPaneli.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbHastaKayitPaneli.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.gbHastaKayitPaneli.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.gbHastaKayitPaneli.HeaderText = "Hasta Kayıt Paneli";
-            this.gbHastaKayitPaneli.Location = new System.Drawing.Point(0, 0);
+            this.gbHastaKayitPaneli.Location = new System.Drawing.Point(0, 26);
             this.gbHastaKayitPaneli.Name = "gbHastaKayitPaneli";
-            this.gbHastaKayitPaneli.Size = new System.Drawing.Size(662, 225);
+            this.gbHastaKayitPaneli.Size = new System.Drawing.Size(662, 205);
             this.gbHastaKayitPaneli.TabIndex = 1;
             this.gbHastaKayitPaneli.Text = "Hasta Kayıt Paneli";
             // 
@@ -166,6 +170,7 @@
             this.btnRandevuGuncelle.Size = new System.Drawing.Size(146, 61);
             this.btnRandevuGuncelle.TabIndex = 7;
             this.btnRandevuGuncelle.Text = "GÜNCELLE";
+            this.btnRandevuGuncelle.Click += new System.EventHandler(this.btnRandevuGuncelle_Click);
             // 
             // btnRandevuSil
             // 
@@ -175,6 +180,7 @@
             this.btnRandevuSil.Size = new System.Drawing.Size(146, 61);
             this.btnRandevuSil.TabIndex = 6;
             this.btnRandevuSil.Text = "SİL";
+            this.btnRandevuSil.Click += new System.EventHandler(this.btnRandevuSil_Click);
             // 
             // dtpRandevuTarihi
             // 
@@ -292,11 +298,31 @@
             this.txbHastaAdi.Size = new System.Drawing.Size(170, 23);
             this.txbHastaAdi.TabIndex = 0;
             // 
+            // radMenu1
+            // 
+            this.radMenu1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem1});
+            this.radMenu1.Location = new System.Drawing.Point(0, 0);
+            this.radMenu1.Name = "radMenu1";
+            this.radMenu1.Size = new System.Drawing.Size(662, 20);
+            this.radMenu1.TabIndex = 2;
+            this.radMenu1.Text = "radMenu1";
+            // 
+            // radMenuItem1
+            // 
+            this.radMenuItem1.AccessibleDescription = "SQL AYAR";
+            this.radMenuItem1.AccessibleName = "SQL AYAR";
+            this.radMenuItem1.Name = "radMenuItem1";
+            this.radMenuItem1.Text = "SQL AYAR";
+            this.radMenuItem1.Visibility = Telerik.WinControls.ElementVisibility.Visible;
+            this.radMenuItem1.Click += new System.EventHandler(this.radMenuItem1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(662, 560);
+            this.Controls.Add(this.radMenu1);
             this.Controls.Add(this.gbHastaKayitPaneli);
             this.Controls.Add(this.radGroupBox1);
             this.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -330,8 +356,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.txbTcKimlikNo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txbHastaAdi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radMenu1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -356,5 +384,7 @@
         private Telerik.WinControls.UI.RadButton btnRandevuSil;
         private Telerik.WinControls.UI.RadGridView grdKayitliRandevular;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private Telerik.WinControls.UI.RadMenu radMenu1;
+        private Telerik.WinControls.UI.RadMenuItem radMenuItem1;
     }
 }

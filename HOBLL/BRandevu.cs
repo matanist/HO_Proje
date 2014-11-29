@@ -24,5 +24,15 @@ namespace HOBLL
             FVT baglanti = new FVT();
             return baglanti.TumRandevular();
         }
+        public bool RandevuDuzenle(int id, DateTime tarih, string hastaAd, string hastaTCKimlik)
+        {
+            FVT baglanti = new FVT();
+            return baglanti.RandevuDuzenle(id, tarih, hastaAd, hastaTCKimlik);
+        }
+        public bool RandevuSil(int id)
+        {
+            FVT baglanti = new FVT();
+            return baglanti.RandevuSil(id);
+        }
     }
 }
